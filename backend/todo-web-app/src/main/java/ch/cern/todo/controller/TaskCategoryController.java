@@ -33,14 +33,13 @@ public class TaskCategoryController {
 
     @GetMapping("/{categoryId}")
     public ResponseEntity<TaskCategory> getTaskCategoryById(@PathVariable Long categoryId) {
-        // TODO -> Refactor this
-        final Optional<TaskCategory> taskCategory = taskCategoryService.getTaskCategoryById(categoryId);
-        return taskCategory.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        final TaskCategory taskCategory = taskCategoryService.getTaskCategoryById(categoryId);
+        return ResponseEntity.ok(taskCategory);
     }
 
     @PutMapping("/{categoryId}")
     public ResponseEntity<TaskCategory> updateTaskCategory(@PathVariable Long categoryId, @RequestBody TaskCategoryRequest taskCategoryRequest) {
-        TaskCategory updatedTaskCategory = taskCategoryService.updateTaskCategory(taskCategoryRequest, categoryId);
+        final TaskCategory updatedTaskCategory = taskCategoryService.updateTaskCategory(taskCategoryRequest, categoryId);
         return ResponseEntity.ok(updatedTaskCategory);
     }
 

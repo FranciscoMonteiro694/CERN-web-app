@@ -1,8 +1,11 @@
 package ch.cern.todo.service;
 
+import ch.cern.todo.exceptions.TaskCategoryAlreadyExistsException;
+import ch.cern.todo.exceptions.TaskCategoryDoesNotExistException;
 import ch.cern.todo.model.TaskCategory;
 import ch.cern.todo.repository.TaskCategoryRepository;
 import ch.cern.todo.request.TaskCategoryRequest;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,7 +20,10 @@ public class TaskCategoryService {
     private TaskCategoryRepository taskCategoryRepository;
 
     public TaskCategory createTaskCategory(TaskCategoryRequest taskCategoryRequest) {
-        final TaskCategory newTaskCategory = new TaskCategory(taskCategoryRequest.categoryName(), taskCategoryRequest.categoryDescription());
+        if (taskCategoryRepository.existsByCategoryName(taskCategoryRequest.categoryName())) {
+            throw new TaskCategoryAlreadyExistsException("Task category with name '" + taskCategoryRequest.categoryName() + "' already exists.");
+        }
+        TaskCategory newTaskCategory = new TaskCategory(taskCategoryRequest.categoryName(), taskCategoryRequest.categoryDescription());
         return taskCategoryRepository.save(newTaskCategory);
     }
 
@@ -25,29 +31,32 @@ public class TaskCategoryService {
         return taskCategoryRepository.findAll();
     }
 
-    public Optional<TaskCategory> getTaskCategoryById(Long categoryId) {
-        return taskCategoryRepository.findById(categoryId);
+    public TaskCategory getTaskCategoryById(Long categoryId) {
+        return taskCategoryRepository.findById(categoryId)
+                .orElseThrow(() -> new TaskCategoryDoesNotExistException("Task category with the given ID '" + categoryId + "' does not exist."));
     }
 
     public TaskCategory updateTaskCategory(TaskCategoryRequest taskCategoryRequest, Long categoryId) {
-        // TODO -> Refactor this
-        Optional<TaskCategory> taskCategory = taskCategoryRepository.findById(categoryId);
 
-        // Check if categoryName is already taken -> refactor this
-        if (taskCategory.isEmpty()) {
-            throw new IllegalArgumentException("Task category with ID " + categoryId + " not found");
+        final TaskCategory categoryToUpdate = taskCategoryRepository.findById(categoryId)
+                .orElseThrow(() -> new TaskCategoryDoesNotExistException("Task category with the given ID '" + categoryId + "' does not exist."));
+
+        final String newCategoryName = taskCategoryRequest.categoryName();
+        if (!categoryToUpdate.getCategoryName().equals(newCategoryName) && taskCategoryRepository.existsByCategoryName(newCategoryName)) {
+            throw new TaskCategoryAlreadyExistsException("Task category with name '" + newCategoryName + "' already exists.");
         }
 
-        TaskCategory categoryToUpdate = taskCategory.get();
-
-        categoryToUpdate.setCategoryName(taskCategoryRequest.categoryName());
+        categoryToUpdate.setCategoryName(newCategoryName);
         categoryToUpdate.setCategoryDescription(taskCategoryRequest.categoryDescription());
 
         return taskCategoryRepository.save(categoryToUpdate);
+
     }
 
     public void deleteTaskCategory(Long categoryId) {
-        // TODO -> Add exceptions
+        if (!taskCategoryRepository.existsById(categoryId)) {
+            throw new TaskCategoryDoesNotExistException("Task category with the given ID '" + categoryId + "' does not exist.");
+        }
         taskCategoryRepository.deleteById(categoryId);
     }
 }

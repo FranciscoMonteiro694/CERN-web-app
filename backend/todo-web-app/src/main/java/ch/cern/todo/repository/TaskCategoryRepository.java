@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface TaskCategoryRepository extends JpaRepository<TaskCategory, Long> {
 
     Optional<TaskCategory> findByCategoryName(String categoryName);
+
+    boolean existsByCategoryName(String s);
 }
