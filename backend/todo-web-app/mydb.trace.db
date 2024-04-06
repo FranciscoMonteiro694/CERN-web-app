@@ -86,3 +86,9 @@ org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-22
 2024-04-06 16:05:08.154193+01:00 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TASK" not found; SQL statement:
 SELECT * FROM TASK [42102-224]
+2024-04-06 16:07:34.855683+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-04-06 16:07:49.734776+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-04-06 16:20:06.116419+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
