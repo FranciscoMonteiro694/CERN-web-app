@@ -1,5 +1,7 @@
 package ch.cern.todo.service;
 
+import ch.cern.todo.exceptions.TaskCategoryDoesNotExistException;
+import ch.cern.todo.exceptions.TaskDoesNotExistException;
 import ch.cern.todo.model.Task;
 import ch.cern.todo.model.TaskCategory;
 import ch.cern.todo.repository.TaskCategoryRepository;
@@ -9,58 +11,55 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TaskService {
 
     @Autowired
     private TaskRepository taskRepository;
-
     @Autowired
     private TaskCategoryRepository taskCategoryRepository;
 
     @Transactional
     public Task createTask(TaskRequest taskRequest) {
-        // TODO - refactor this
-        final TaskCategory existingCategory = taskCategoryRepository.findById(taskRequest.categoryId()).orElse(null);
 
-        final Task newTask = new Task(taskRequest.taskName(), taskRequest.taskDescription(), taskRequest.deadline(), existingCategory);
+        final TaskCategory taskCategory = taskCategoryRepository.findById(taskRequest.categoryId())
+                .orElseThrow(() -> new TaskCategoryDoesNotExistException("Task category with the given ID '" + taskRequest.categoryId() + "' does not exist."));
+
+        final Task newTask = new Task(taskRequest.taskName(), taskRequest.taskDescription(), taskRequest.deadline(), taskCategory);
+
         return taskRepository.save(newTask);
-    }
-/*
-
-    @Transactional
-    public Task updateTask(Long taskId, Task task) {
-        // Ensure the task exists in the database before updating
-        Task existingTask = taskRepository.findById(task.getTaskId())
-                .orElseThrow(() -> new NotFoundException("Task not found"));
-        existingTask.setTaskName(task.getTaskName());
-        existingTask.setTaskDescription(task.getTaskDescription());
-        existingTask.setDeadline(task.getDeadline());
-        existingTask.setCategory(task.getCategory());
-        return taskRepository.save(existingTask);
-        return null;
-    }
-
-    @Transactional
-    public void deleteTask(Long taskId) {
-        // Ensure the task exists in the database before deleting
-        Task existingTask = taskRepository.findById(taskId)
-                .orElseThrow(() -> new NotFoundException("Task not found"));
-        taskRepository.delete(existingTask);
-
     }
 
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
-
-        return null;
     }
 
     public Task getTaskById(Long taskId) {
         return taskRepository.findById(taskId)
-                .orElseThrow(() -> new NotFoundException("Task not found"));
-
-        return null;
+                .orElseThrow(() -> new TaskDoesNotExistException("Task with the given ID '" + taskId + "' does not exist."));
     }
-    */
+
+    public Task updateTask(TaskRequest taskRequest, Long taskId) {
+
+        final Task taskToUpdate = taskRepository.findById(taskId)
+                .orElseThrow(() -> new TaskDoesNotExistException("Task with the given ID '" + taskId + "' does not exist."));
+
+        taskToUpdate.setTaskName(taskRequest.taskName());
+        taskToUpdate.setTaskDescription(taskRequest.taskDescription());
+        taskToUpdate.setDeadline(taskRequest.deadline());
+        taskToUpdate.setCategory(taskCategoryRepository.findById(taskRequest.categoryId())
+                .orElseThrow(() -> new TaskCategoryDoesNotExistException("Task category with the given ID '" + taskRequest.categoryId() + "' does not exist.")));
+
+        return taskRepository.save(taskToUpdate);
+    }
+
+    public void deleteTask(Long taskId) {
+        if (!taskRepository.existsById(taskId)) {
+            throw new TaskDoesNotExistException("Task with the given ID '" + taskId + "' does not exist.");
+        }
+        taskRepository.deleteById(taskId);
+    }
+
 }

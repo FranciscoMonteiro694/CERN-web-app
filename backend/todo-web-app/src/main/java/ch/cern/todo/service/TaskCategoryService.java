@@ -23,7 +23,7 @@ public class TaskCategoryService {
         if (taskCategoryRepository.existsByCategoryName(taskCategoryRequest.categoryName())) {
             throw new TaskCategoryAlreadyExistsException("Task category with name '" + taskCategoryRequest.categoryName() + "' already exists.");
         }
-        TaskCategory newTaskCategory = new TaskCategory(taskCategoryRequest.categoryName(), taskCategoryRequest.categoryDescription());
+        final TaskCategory newTaskCategory = new TaskCategory(taskCategoryRequest.categoryName(), taskCategoryRequest.categoryDescription());
         return taskCategoryRepository.save(newTaskCategory);
     }
 
