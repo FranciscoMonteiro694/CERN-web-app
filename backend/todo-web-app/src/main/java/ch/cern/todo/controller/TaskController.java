@@ -1,7 +1,6 @@
 package ch.cern.todo.controller;
 
 import ch.cern.todo.model.Task;
-import ch.cern.todo.model.TaskCategory;
 import ch.cern.todo.request.TaskRequest;
 import ch.cern.todo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;

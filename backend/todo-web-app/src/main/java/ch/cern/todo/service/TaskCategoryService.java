@@ -5,12 +5,10 @@ import ch.cern.todo.exceptions.TaskCategoryDoesNotExistException;
 import ch.cern.todo.model.TaskCategory;
 import ch.cern.todo.repository.TaskCategoryRepository;
 import ch.cern.todo.request.TaskCategoryRequest;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
