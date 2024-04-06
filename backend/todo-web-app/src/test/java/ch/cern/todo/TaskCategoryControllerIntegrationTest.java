@@ -99,7 +99,6 @@ public class TaskCategoryControllerIntegrationTest {
         final TaskCategory taskCategory = new TaskCategory("Category 6", "Description 6");
         taskCategoryRepository.save(taskCategory);
 
-        System.out.println("here" + taskCategory.getCategoryId());
         mockMvc.perform(get("/categories/{categoryId}", taskCategory.getCategoryId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -108,7 +107,6 @@ public class TaskCategoryControllerIntegrationTest {
     @Test
     public void givenCategoryWithAlreadyExistingName_whenCreatingNewCategory_thenCategoryIsNotCreated() throws Exception {
         final TaskCategory taskCategory = new TaskCategory("Category 7", "Description 7");
-        taskCategory.setCategoryId(7L);
         taskCategoryRepository.save(taskCategory);
 
         final TaskCategoryRequest taskCategoryRequest = new TaskCategoryRequest("Category 7", "Description 7");

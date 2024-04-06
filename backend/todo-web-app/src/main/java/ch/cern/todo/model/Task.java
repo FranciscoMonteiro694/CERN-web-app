@@ -22,9 +22,13 @@ public class Task {
     @Column(name = "deadline")
     private LocalDateTime deadline;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private TaskCategory category;
+
+    public Task() {
+
+    }
 
     public Task(String taskName, String taskDescription, LocalDateTime deadline, TaskCategory category) {
         this.taskName = taskName;
