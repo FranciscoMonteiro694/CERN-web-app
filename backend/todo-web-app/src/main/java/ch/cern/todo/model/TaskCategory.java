@@ -18,7 +18,6 @@ public class TaskCategory {
     private String categoryDescription;
 
     public TaskCategory() {
-
     }
 
     public TaskCategory(String categoryName, String categoryDescription) {
