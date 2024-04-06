@@ -3,6 +3,7 @@ package ch.cern.todo.controller;
 import ch.cern.todo.model.TaskCategory;
 import ch.cern.todo.request.TaskCategoryRequest;
 import ch.cern.todo.service.TaskCategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class TaskCategoryController {
     private TaskCategoryService taskCategoryService;
 
     @PostMapping
-    public ResponseEntity<TaskCategory> createTaskCategory(@RequestBody TaskCategoryRequest taskCategoryRequest) {
+    public ResponseEntity<TaskCategory> createTaskCategory(@Valid @RequestBody TaskCategoryRequest taskCategoryRequest) {
         final TaskCategory taskCategory = taskCategoryService.createTaskCategory(taskCategoryRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(taskCategory);
@@ -37,7 +38,7 @@ public class TaskCategoryController {
     }
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<TaskCategory> updateTaskCategory(@PathVariable Long categoryId, @RequestBody TaskCategoryRequest taskCategoryRequest) {
+    public ResponseEntity<TaskCategory> updateTaskCategory(@PathVariable Long categoryId, @Valid @RequestBody TaskCategoryRequest taskCategoryRequest) {
         final TaskCategory updatedTaskCategory = taskCategoryService.updateTaskCategory(taskCategoryRequest, categoryId);
         return ResponseEntity.ok(updatedTaskCategory);
     }

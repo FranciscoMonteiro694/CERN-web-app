@@ -3,6 +3,7 @@ package ch.cern.todo.controller;
 import ch.cern.todo.model.Task;
 import ch.cern.todo.request.TaskRequest;
 import ch.cern.todo.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class TaskController {
     private TaskService taskService;
 
     @PostMapping
-    public Task createTask(@RequestBody TaskRequest taskRequest) {
+    public Task createTask(@Valid @RequestBody TaskRequest taskRequest) {
         return taskService.createTask(taskRequest);
     }
 
@@ -34,7 +35,7 @@ public class TaskController {
     }
 
     @PutMapping("/{taskId}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long taskId, @RequestBody TaskRequest taskRequest) {
+    public ResponseEntity<Task> updateTask(@PathVariable Long taskId, @Valid @RequestBody TaskRequest taskRequest) {
         final Task updatedTask = taskService.updateTask(taskRequest, taskId);
         return ResponseEntity.ok(updatedTask);
     }

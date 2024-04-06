@@ -16,11 +16,10 @@ public class Task {
     @Column(name = "task_name", length = 100)
     private String taskName;
 
-    @Column(name = "task_description", length = 200)
+    @Column(name = "task_description", length = 500)
     private String taskDescription;
 
     @Column(name = "deadline")
-    // TODO -> check if it shouldn't be a timestamp
     private LocalDateTime deadline;
 
     @ManyToOne(fetch = FetchType.LAZY)

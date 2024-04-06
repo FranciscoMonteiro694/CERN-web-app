@@ -1,8 +1,16 @@
 package ch.cern.todo.request;
 
+import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDateTime;
 
-public record TaskRequest(String taskName, String taskDescription, LocalDateTime deadline, Long categoryId) {
+public record TaskRequest(
+        @Size(max = 100, message = "Task name cannot exceed 100 characters")
+        String taskName,
+        @Size(max = 500, message = "Task description cannot exceed 500 characters")
+        String taskDescription,
+        String deadline, Long categoryId) {
 
     @Override
     public String taskName() {
@@ -15,7 +23,7 @@ public record TaskRequest(String taskName, String taskDescription, LocalDateTime
     }
 
     @Override
-    public LocalDateTime deadline() {
+    public String deadline() {
         return deadline;
     }
 
