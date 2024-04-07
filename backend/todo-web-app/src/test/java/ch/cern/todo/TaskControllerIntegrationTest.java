@@ -157,7 +157,7 @@ public class TaskControllerIntegrationTest {
         final TaskCategory taskCategory = new TaskCategory("Category 6", "Description 6");
         taskCategoryRepository.save(taskCategory);
 
-        final TaskRequest taskRequest = new TaskRequest("Task 1", "Description 2", "2025-04-00    10:15:30", taskCategory.getCategoryId());
+        final TaskRequest taskRequest = new TaskRequest("Task 1", "Description 2", "2025-04-00T10:15:30", taskCategory.getCategoryId());
 
         mockMvc.perform(post("/tasks")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -168,7 +168,7 @@ public class TaskControllerIntegrationTest {
 
     @Test
     public void givenTaskCategoryDoesNotExist_whenCreatingNewTask_thenTaskIsNotCreated() throws Exception {
-        final TaskRequest taskRequest = new TaskRequest("Task 1", "Description 2", "2025-04-00T10:15:30", 20L);
+        final TaskRequest taskRequest = new TaskRequest("Task 1", "Description 2", "2025-04-01T10:15:30", 20L);
 
         mockMvc.perform(post("/tasks")
                         .contentType(MediaType.APPLICATION_JSON)

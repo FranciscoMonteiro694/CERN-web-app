@@ -1,0 +1,7 @@
+body {
+    background-color: #1e272e; /* Azul escuro */
+    color: black; /* Texto branco para contraste */
+  }
+  
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
