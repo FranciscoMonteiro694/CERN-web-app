@@ -4,15 +4,19 @@
       <mat-card-header>
         <mat-card-title-group>
           <mat-card-title class="main-card-title">Tasks 🗒️</mat-card-title>
-          <button mat-mini-fab color="warn"><mat-icon >plus_one</mat-icon></button>
+          <button mat-mini-fab color="primary"><mat-icon>add</mat-icon></button>
         </mat-card-title-group>
       </mat-card-header>
       <mat-card>
         <mat-card-header>
           <mat-card-title-group>
             <mat-card-title>Task 1</mat-card-title>
-            <mat-card-subtitle>Category 1</mat-card-subtitle>
-            <h4>2024-04-07 10:15:30</h4>
+            <mat-card-subtitle>Category 1 <h4>2024-04-07 10:15:30</h4></mat-card-subtitle>
+            
+            <mat-card-actions>
+              <button mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+              <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
+            </mat-card-actions>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
@@ -23,8 +27,12 @@
         <mat-card-header>
           <mat-card-title-group>
             <mat-card-title>Task 2</mat-card-title>
-            <mat-card-subtitle>Category 2</mat-card-subtitle>
-            <h4>2024-04-07 10:15:30</h4>
+            <mat-card-subtitle>Category 2 <h4>2024-04-07 10:15:30</h4></mat-card-subtitle>
+
+            <mat-card-actions>
+              <button mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+              <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
+            </mat-card-actions>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
@@ -36,13 +44,20 @@
   <div class="div-card-right">
     <mat-card>
       <mat-card-header>
+        <mat-card-title-group>
         <mat-card-title class="main-card-title">Categories 🎨</mat-card-title>
+        <button mat-mini-fab color="primary"><mat-icon>add</mat-icon></button>
+      </mat-card-title-group>
       </mat-card-header>
 
       <mat-card>
         <mat-card-header>
           <mat-card-title-group>
             <mat-card-title>Category 1</mat-card-title>
+            <mat-card-actions>
+              <button mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+              <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
+            </mat-card-actions>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
@@ -54,6 +69,10 @@
         <mat-card-header>
           <mat-card-title-group>
             <mat-card-title>Category 2</mat-card-title>
+            <mat-card-actions>
+              <button mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+              <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
+            </mat-card-actions>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
