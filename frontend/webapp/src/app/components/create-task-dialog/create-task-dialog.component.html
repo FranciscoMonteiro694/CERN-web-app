@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Create New Task</h2>
+<div mat-dialog-content style="display: flex; flex-direction: column; padding: 10px;">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput placeholder="Enter task name" [(ngModel)]="taskName" maxlength="100">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea matInput placeholder="Enter task description" [(ngModel)]="taskDescription" maxlength="500"></textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Deadline</mat-label>
+    <input matInput type="datetime-local" placeholder="deadline" [(ngModel)]="deadline">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Category</mat-label>
+    <select matNativeControl required [(ngModel)]="categoryId">
+      <option *ngFor="let category of data.categories" [value]="category.categoryId">{{ category.categoryName }}</option>
+    </select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [mat-dialog-close]="{taskName: taskName, taskDescription: taskDescription, deadline: deadline, categoryId: categoryId}" cdkFocusInitial>Create</button>
+</div>

@@ -19,4 +19,9 @@ export class TasksApiService {
   createTask(task: Task): Observable<Task> {
     return this.http.post<Task>(this.baseUrl, task);
   }
+
+  deleteTask(taskId: number): Observable<void> {
+    const url = `${this.baseUrl}/${taskId}`;
+    return this.http.delete<void>(url);
+  }
 }

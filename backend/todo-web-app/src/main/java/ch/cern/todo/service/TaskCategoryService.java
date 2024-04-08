@@ -1,9 +1,12 @@
 package ch.cern.todo.service;
 
 import ch.cern.todo.exceptions.TaskCategoryAlreadyExistsException;
+import ch.cern.todo.exceptions.TaskCategoryConflictException;
 import ch.cern.todo.exceptions.TaskCategoryDoesNotExistException;
+import ch.cern.todo.model.Task;
 import ch.cern.todo.model.TaskCategory;
 import ch.cern.todo.repository.TaskCategoryRepository;
+import ch.cern.todo.repository.TaskRepository;
 import ch.cern.todo.request.TaskCategoryRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,9 @@ public class TaskCategoryService {
 
     @Autowired
     private TaskCategoryRepository taskCategoryRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     public TaskCategory createTaskCategory(TaskCategoryRequest taskCategoryRequest) {
         if (taskCategoryRepository.existsByCategoryName(taskCategoryRequest.categoryName())) {
@@ -55,6 +61,13 @@ public class TaskCategoryService {
         if (!taskCategoryRepository.existsById(categoryId)) {
             throw new TaskCategoryDoesNotExistException("Task category with the given ID '" + categoryId + "' does not exist.");
         }
+
+        // Check if there are tasks associated with the category
+        List<Task> tasks = taskRepository.findByCategoryId(categoryId);
+        if (!tasks.isEmpty()) {
+            throw new TaskCategoryConflictException("Cannot delete task category with ID'" + categoryId + "' because it has associated tasks.");
+        }
+
         taskCategoryRepository.deleteById(categoryId);
     }
 }

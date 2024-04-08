@@ -4,39 +4,23 @@
       <mat-card-header>
         <mat-card-title-group>
           <mat-card-title class="main-card-title">Tasks 🗒️</mat-card-title>
-          <button mat-mini-fab color="primary"><mat-icon>add</mat-icon></button>
+          <button mat-mini-fab color="primary" (click)="openCreateTaskDialog()"><mat-icon>add</mat-icon></button>
         </mat-card-title-group>
       </mat-card-header>
-      <mat-card>
+      <mat-card *ngFor="let task of tasks" [style.border]="'1px solid #e0e0e0'" [style.padding]="'16px'" [style.margin]="'8px'">
         <mat-card-header>
           <mat-card-title-group>
-            <mat-card-title>Task 1</mat-card-title>
-            <mat-card-subtitle>Category 1 <h4>2024-04-07 10:15:30</h4></mat-card-subtitle>
+            <mat-card-title>{{ task.taskName }}</mat-card-title>
+            <mat-card-subtitle>{{ task.category.categoryName }}<h4>{{ task.deadline }}</h4></mat-card-subtitle>
             
             <mat-card-actions>
               <button mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
-              <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
+              <button mat-icon-button color="warn" (click)="deleteTask(task.taskId)"><mat-icon>delete</mat-icon></button>
             </mat-card-actions>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et
-        </mat-card-content>
-      </mat-card>
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title-group>
-            <mat-card-title>Task 2</mat-card-title>
-            <mat-card-subtitle>Category 2 <h4>2024-04-07 10:15:30</h4></mat-card-subtitle>
-
-            <mat-card-actions>
-              <button mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
-              <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
-            </mat-card-actions>
-          </mat-card-title-group>
-        </mat-card-header>
-        <mat-card-content>
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et
+          {{ task.taskDescription }}
         </mat-card-content>
       </mat-card>
     </mat-card>
@@ -46,37 +30,22 @@
       <mat-card-header>
         <mat-card-title-group>
         <mat-card-title class="main-card-title">Categories 🎨</mat-card-title>
-        <button mat-mini-fab color="primary"><mat-icon>add</mat-icon></button>
+        <button mat-mini-fab color="primary" (click)="openCreateCategoryDialog()"><mat-icon>add</mat-icon></button>
       </mat-card-title-group>
       </mat-card-header>
 
-      <mat-card>
+      <mat-card *ngFor="let category of taskCategories" [style.border]="'1px solid #e0e0e0'" [style.padding]="'16px'" [style.margin]="'8px'">
         <mat-card-header>
           <mat-card-title-group>
-            <mat-card-title>Category 1</mat-card-title>
+            <mat-card-title>{{ category.categoryName }}</mat-card-title>
             <mat-card-actions>
               <button mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
-              <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
+              <button mat-icon-button color="warn" (click)="deleteCategory(category.categoryId)"><mat-icon>delete</mat-icon></button>
             </mat-card-actions>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title-group>
-            <mat-card-title>Category 2</mat-card-title>
-            <mat-card-actions>
-              <button mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
-              <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
-            </mat-card-actions>
-          </mat-card-title-group>
-        </mat-card-header>
-        <mat-card-content>
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et
+          {{ category.categoryDescription }}        
         </mat-card-content>
       </mat-card>
     </mat-card>

@@ -1,8 +1,11 @@
+import { TaskCategory } from "./task-category.model";
+
 export interface Task {
-    id: number;
-    name: string;
-    description: string;
+    taskId: number;
+    taskName: string;
+    taskDescription: string;
     deadline: Date;
-    categoryId: number;
+    categoryId?: number;
+    category: TaskCategory;
   }
   

@@ -19,4 +19,9 @@ export class CategoriesApiService {
   createCategory(category: TaskCategory): Observable<TaskCategory> {
     return this.http.post<TaskCategory>(this.baseUrl, category);
   }
+
+  deleteCategory(categoryId: number): Observable<void> {
+    const url = `${this.baseUrl}/${categoryId}`;
+    return this.http.delete<void>(url);
+  }
 }
